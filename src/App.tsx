@@ -16,7 +16,7 @@ function App() {
             position="top-right"
             reverseOrder={false}
             gutter={8}
-            containerClassName="mt-12"
+            containerClassName=""
             containerStyle={{}}
             toasterId="default"
             toastOptions={{

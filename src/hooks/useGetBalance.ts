@@ -32,6 +32,7 @@ export const useGetBalance = (walletAddress?: `0x${string}`) => {
   const formattedBalance = useMemo(() => {
     const rawBalance = data?.[0]?.result;
     const decimals = data?.[1]?.result;
+    const symbol = data?.[2]?.result;
 
     const balance =
       rawBalance !== undefined && decimals !== undefined
@@ -42,7 +43,7 @@ export const useGetBalance = (walletAddress?: `0x${string}`) => {
       balance,
       formattedAmount: formatTokenAmount(balance, 2),
       decimals: decimals as number | undefined,
-      symbol: data?.[2]?.result as string | undefined,
+      symbol,
       isLoading,
       isError,
     };

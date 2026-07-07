@@ -6,6 +6,7 @@ import {
   useConnection,
   useConnectors,
   useDisconnect,
+  useSignMessage,
   useSwitchChain,
 } from "wagmi";
 import { useWalletStore } from "@/stores/useWalletStore";
@@ -17,6 +18,8 @@ export const useWalletConnect = () => {
   const balance = useGetBalance(address);
 
   const { mutateAsync: connectAsync, isPending: isConnecting } = useConnect();
+  const { mutateAsync: signMessageAsync, isPending: isSigningMessage } =
+    useSignMessage();
   const { mutateAsync: switchChainAsync, isPending: isSwitchingChain } =
     useSwitchChain();
   const { mutateAsync: disconnectAsync, isPending: isDisconnecting } =
@@ -40,6 +43,11 @@ export const useWalletConnect = () => {
       if (!activeConnector) return;
 
       await connectAsync({ connector: activeConnector });
+      await signMessageAsync({
+        message: "nonce: sign message",
+        account: address as `0x${string}`,
+      });
+
       toast.success("Wallet connected");
     } catch (error) {
       console.log(error);
@@ -58,10 +66,9 @@ export const useWalletConnect = () => {
     balance,
     address,
     chainId: walletChainId,
+    isConnecting: isConnecting || isSwitchingChain || isSigningMessage,
     isConnected,
-    isConnecting,
-    isSwitchingChain,
-    isDisconnecting,
+    isDisconnecting: isDisconnecting,
     handleConnectWallet,
     handleDisconnectWallet,
   };

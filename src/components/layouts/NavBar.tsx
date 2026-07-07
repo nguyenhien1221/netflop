@@ -20,7 +20,6 @@ const NavBar = () => {
   const {
     address,
     balance,
-    isConnected,
     isConnecting,
     isDisconnecting,
     handleConnectWallet,
@@ -54,7 +53,7 @@ const NavBar = () => {
           />
         </div>
 
-        {isConnected && address ? (
+        {address && !isConnecting ? (
           <div className="flex shrink-0 items-center gap-2">
             <div
               aria-label="Token balance"
