@@ -3,7 +3,8 @@ import { createBrowserRouter } from "react-router-dom";
 import { authRoute } from "@/pages/Auth/routes";
 import HomeLayout from "@/components/layouts/HomeLayout";
 import { homeRoute } from "@/pages/Home/routes";
-import NotfoundPage from "@/pages/NotfoundPage.tsx/NotfoundPage";
+import { watchRoute } from "@/pages/Watch/routes";
+import { notFoundRoute } from "@/pages/NotFound/routes";
 
 export const router = createBrowserRouter([
   {
@@ -14,9 +15,8 @@ export const router = createBrowserRouter([
       {
         path: "",
         Component: HomeLayout,
-        children: [homeRoute],
+        children: [homeRoute, watchRoute, notFoundRoute],
       },
     ],
   },
-  { path: "*", Component: NotfoundPage },
 ]);
