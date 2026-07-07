@@ -8,6 +8,7 @@ export type MovieCardProps = Pick<
   | "year"
   | "rating"
   | "isNew"
+  | "isPremium"
   | "progress"
   | "releaseDate"
 >;

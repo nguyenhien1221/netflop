@@ -36,6 +36,7 @@ const MovieRowSection = ({
             year={movie.year}
             rating={movie.rating}
             isNew={movie.isNew}
+            isPremium={movie.isPremium}
             progress={showProgress ? movie.progress : undefined}
             releaseDate={showReleaseDate ? movie.releaseDate : undefined}
           />

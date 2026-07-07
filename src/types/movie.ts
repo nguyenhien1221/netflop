@@ -8,6 +8,7 @@ export interface Movie {
   synopsis?: string;
   genres?: string[];
   isNew?: boolean;
+  isPremium?: boolean;
   releaseDate?: string;
   progress?: number;
   videoUrl?: string;

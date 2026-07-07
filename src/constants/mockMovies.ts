@@ -13,6 +13,7 @@ export const featuredMovie: Movie = {
     "Paul Atreides unites with the Fremen while on a warpath of revenge against the conspirators who destroyed his family.",
   genres: ["Sci-Fi", "Adventure", "Drama"],
   isNew: true,
+  isPremium: true,
   videoUrl:
     "https://embed2.streamc.xyz/embed.php?hash=294db7106f9e9a9634b0b9230fecd440",
 };
@@ -29,6 +30,7 @@ export const newUpdatesMovies: Movie[] = [
       "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.",
     genres: ["Biography", "Drama", "History"],
     isNew: true,
+    isPremium: true,
   },
   {
     id: "poor-things",
@@ -77,6 +79,7 @@ export const continueWatchingMovies: Movie[] = [
     synopsis:
       "Young blade runner K's discovery of a long-buried secret leads him to track down former blade runner Rick Deckard.",
     genres: ["Sci-Fi", "Thriller"],
+    isPremium: true,
     videoUrl:
       "https://embed2.streamc.xyz/embed.php?hash=294db7106f9e9a9634b0b9230fecd440",
   },
@@ -91,6 +94,7 @@ export const continueWatchingMovies: Movie[] = [
     synopsis:
       "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
     genres: ["Sci-Fi", "Adventure", "Drama"],
+    isPremium: true,
     videoUrl:
       "https://embed3.streamc.xyz/embed.php?hash=62a145f35b19a07896f37fee66ab3fed",
   },
@@ -105,6 +109,7 @@ export const continueWatchingMovies: Movie[] = [
     synopsis:
       "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into a CEO's mind.",
     genres: ["Action", "Sci-Fi", "Thriller"],
+    isPremium: true,
   },
   {
     id: "matrix",
@@ -155,6 +160,7 @@ export const trendingMovies: Movie[] = [
       "When a mysterious European ship is found marooned in a nearby fishing village, Lord Yoshii Toranaga discovers secrets that could tip the scales of power.",
     genres: ["Action", "Drama", "History"],
     isNew: true,
+    isPremium: true,
   },
   {
     id: "house-dragon",
@@ -201,6 +207,7 @@ export const actionMovies: Movie[] = [
     synopsis:
       "An ex-hitman comes out of retirement to track down the gangsters who killed his dog and stole his car.",
     genres: ["Action", "Crime", "Thriller"],
+    isPremium: true,
   },
   {
     id: "mad-max",
@@ -268,6 +275,7 @@ export const sciFiMovies: Movie[] = [
     synopsis:
       "A young programmer is selected to participate in a ground-breaking experiment in synthetic intelligence by evaluating the human qualities of an AI.",
     genres: ["Sci-Fi", "Drama", "Thriller"],
+    isPremium: true,
   },
   {
     id: "alien",

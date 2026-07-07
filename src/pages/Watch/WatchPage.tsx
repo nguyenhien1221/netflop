@@ -1,12 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import VideoPlayer from "@/components/modules/Watch/VideoPlayer";
+import PremiumGateSection from "@/components/modules/Watch/PremiumGateSection";
 import MovieInfoSection from "@/components/modules/Watch/MovieInfoSection";
 import Button from "@/components/common/Button";
 import { getMovieById } from "@/utils/movie.utils";
 import { NAV_PATH } from "@/constants/nav.constants";
+import { useWalletStore } from "@/stores/useWalletStore";
 
 const WatchPage = () => {
   const { movieId } = useParams<{ movieId: string }>();
+  const isConnected = useWalletStore((state) => state.isConnected);
   const movie = movieId ? getMovieById(movieId) : undefined;
 
   if (!movie) {
@@ -23,13 +26,19 @@ const WatchPage = () => {
     );
   }
 
+  const isPremiumLocked = Boolean(movie.isPremium && !isConnected);
+
   return (
     <main className="flex flex-col gap-6 px-4 py-6 md:gap-8 md:px-6 md:py-8">
-      <VideoPlayer
-        videoUrl={movie.videoUrl}
-        posterUrl={movie.posterUrl}
-        title={movie.title}
-      />
+      {isPremiumLocked ? (
+        <PremiumGateSection movie={movie} />
+      ) : (
+        <VideoPlayer
+          videoUrl={movie.videoUrl}
+          posterUrl={movie.posterUrl}
+          title={movie.title}
+        />
+      )}
       <MovieInfoSection movie={movie} />
     </main>
   );
