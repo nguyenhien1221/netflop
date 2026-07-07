@@ -79,7 +79,6 @@ export const continueWatchingMovies: Movie[] = [
     synopsis:
       "Young blade runner K's discovery of a long-buried secret leads him to track down former blade runner Rick Deckard.",
     genres: ["Sci-Fi", "Thriller"],
-    isPremium: true,
     videoUrl:
       "https://embed2.streamc.xyz/embed.php?hash=294db7106f9e9a9634b0b9230fecd440",
   },
@@ -94,7 +93,6 @@ export const continueWatchingMovies: Movie[] = [
     synopsis:
       "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
     genres: ["Sci-Fi", "Adventure", "Drama"],
-    isPremium: true,
     videoUrl:
       "https://embed3.streamc.xyz/embed.php?hash=62a145f35b19a07896f37fee66ab3fed",
   },
@@ -109,7 +107,6 @@ export const continueWatchingMovies: Movie[] = [
     synopsis:
       "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into a CEO's mind.",
     genres: ["Action", "Sci-Fi", "Thriller"],
-    isPremium: true,
   },
   {
     id: "matrix",

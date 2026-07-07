@@ -7,8 +7,7 @@ export const useWalletStore = create<WalletState>()(
     (set) => ({
       address: null,
       isConnected: false,
-      syncConnection: (address) =>
-        set({ address, isConnected: address !== null }),
+      connect: (address) => set({ address, isConnected: true }),
       disconnect: () => set({ address: null, isConnected: false }),
     }),
     {

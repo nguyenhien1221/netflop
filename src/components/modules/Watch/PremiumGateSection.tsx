@@ -1,11 +1,7 @@
 import { Lock } from "lucide-react";
-import Button from "@/components/common/Button";
-import { useWalletConnect } from "@/hooks/useWalletConnect";
 import type { PremiumGateSectionProps } from "@/types/components/watch/premium-gate-section.types";
 
 const PremiumGateSection = ({ movie }: PremiumGateSectionProps) => {
-  const { handleConnectWallet, isConnecting } = useWalletConnect();
-
   return (
     <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black">
       <img
@@ -30,15 +26,6 @@ const PremiumGateSection = ({ movie }: PremiumGateSectionProps) => {
             premium title. Connect your wallet to unlock and watch this movie.
           </p>
         </div>
-
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={handleConnectWallet}
-          disabled={isConnecting}
-        >
-          {isConnecting ? "Connecting..." : "Connect Wallet"}
-        </Button>
       </div>
     </div>
   );
