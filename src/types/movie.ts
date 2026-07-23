@@ -1,15 +1,12 @@
-export interface Movie {
-  id: string;
+export interface IMovie {
+  id: number;
   title: string;
-  posterUrl: string;
-  backdropUrl?: string;
-  year: string;
-  rating: string;
-  synopsis?: string;
-  genres?: string[];
-  isNew?: boolean;
-  isPremium?: boolean;
-  releaseDate?: string;
-  progress?: number;
-  videoUrl?: string;
+  description: string;
+  thumbnailUrl: string;
+  videoUrl: string;
+  isPremium: boolean;
+  price: number | null;
+  currency: string;
+  category: string;
+  hasPurchased: boolean;
 }

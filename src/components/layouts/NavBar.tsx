@@ -38,7 +38,7 @@ const NavBar = () => {
         <div className="flex min-w-0 flex-1 items-center gap-4 md:gap-6">
           <Link
             to={NAV_PATH.HOME}
-            className="shrink-0 text-xl font-bold tracking-tight text-white transition-opacity hover:opacity-80"
+            className="shrink-0 text-2xl font-bold tracking-tight text-white transition-opacity hover:opacity-80"
           >
             <span className="text-[#0084ff]">Net</span>flop
           </Link>

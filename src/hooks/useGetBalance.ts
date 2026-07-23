@@ -49,9 +49,5 @@ export const useGetBalance = (walletAddress?: `0x${string}`) => {
     };
   }, [data, isLoading, isError]);
 
-  return {
-    ...formattedBalance,
-    isLoading,
-    isError,
-  };
+  return formattedBalance;
 };

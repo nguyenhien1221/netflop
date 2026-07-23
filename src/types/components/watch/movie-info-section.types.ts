@@ -1,5 +1,4 @@
-import type { Movie } from "@/types/movie";
-
+import type { IMovie } from "@/types/movie";
 export interface MovieInfoSectionProps {
-  movie: Movie;
+  movie: IMovie;
 }

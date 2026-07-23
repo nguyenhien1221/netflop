@@ -3,16 +3,28 @@ import VideoPlayer from "@/components/modules/Watch/VideoPlayer";
 import PremiumGateSection from "@/components/modules/Watch/PremiumGateSection";
 import MovieInfoSection from "@/components/modules/Watch/MovieInfoSection";
 import Button from "@/components/common/Button";
-import { getMovieById } from "@/utils/movie.utils";
 import { NAV_PATH } from "@/constants/nav.constants";
 import { useWalletStore } from "@/stores/useWalletStore";
+import { useGetMovieDetails } from "@/services/movies/useGetMovieDetails";
+import { Loader2 } from "lucide-react";
 
 const WatchPage = () => {
   const { movieId } = useParams<{ movieId: string }>();
   const isConnected = useWalletStore((state) => state.isConnected);
-  const movie = movieId ? getMovieById(movieId) : undefined;
 
-  if (!movie) {
+  const { MovieDetails, isLoadingMovieDetails } = useGetMovieDetails(
+    movieId ?? "",
+  );
+
+  if (isLoadingMovieDetails) {
+    return (
+      <div>
+        <Loader2 />
+      </div>
+    );
+  }
+
+  if (!MovieDetails) {
     return (
       <main className="flex flex-col items-center justify-center gap-4 px-4 py-24 text-center md:px-6">
         <h1 className="text-2xl font-semibold text-white">Movie not found</h1>
@@ -26,20 +38,20 @@ const WatchPage = () => {
     );
   }
 
-  const isPremiumLocked = Boolean(movie.isPremium && !isConnected);
+  const isPremiumLocked = Boolean(MovieDetails.isPremium && !isConnected);
 
   return (
     <main className="flex flex-col gap-6 px-4 py-6 md:gap-8 md:px-6 md:py-8">
       {isPremiumLocked ? (
-        <PremiumGateSection movie={movie} />
+        <PremiumGateSection movie={MovieDetails} />
       ) : (
         <VideoPlayer
-          videoUrl={movie.videoUrl}
-          posterUrl={movie.posterUrl}
-          title={movie.title}
+          videoUrl={MovieDetails.videoUrl}
+          posterUrl={MovieDetails.thumbnailUrl}
+          title={MovieDetails.title}
         />
       )}
-      <MovieInfoSection movie={movie} />
+      <MovieInfoSection movie={MovieDetails} />
     </main>
   );
 };

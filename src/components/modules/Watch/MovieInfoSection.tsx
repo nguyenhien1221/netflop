@@ -1,14 +1,13 @@
-import { Star } from "lucide-react";
 import type { MovieInfoSectionProps } from "@/types/components/watch/movie-info-section.types";
 
 const MovieInfoSection = ({ movie }: MovieInfoSectionProps) => {
-  const { title, posterUrl, year, rating, genres, synopsis, isNew } = movie;
+  const { category, description, thumbnailUrl, title } = movie;
 
   return (
     <section aria-label="Movie information" className="max-w-4xl">
       <div className="flex flex-col gap-6 sm:flex-row sm:gap-8">
         <img
-          src={posterUrl}
+          src={thumbnailUrl}
           alt={`${title} poster`}
           className="mx-auto aspect-2/3 w-[140px] shrink-0 rounded-lg object-cover ring-1 ring-white/10 sm:mx-0 sm:w-[160px]"
         />
@@ -18,15 +17,15 @@ const MovieInfoSection = ({ movie }: MovieInfoSectionProps) => {
             <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
               {title}
             </h1>
-            {isNew && (
+            {/* {isNew && (
               <span className="rounded bg-[#0084ff] px-2 py-0.5 text-xs font-semibold text-white">
                 NEW
               </span>
-            )}
+            )} */}
           </div>
 
-          <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-white/70">
-            <span>{year}</span>
+          {/* <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-white/70">
+            <span>{releaseDate}</span>
             {rating !== "—" && (
               <>
                 <span>·</span>
@@ -36,24 +35,22 @@ const MovieInfoSection = ({ movie }: MovieInfoSectionProps) => {
                 </span>
               </>
             )}
-          </div>
+          </div> */}
 
-          {genres && genres.length > 0 && (
+          {category && category.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
-              {genres.map((genre) => (
-                <span
-                  key={genre}
-                  className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80"
-                >
-                  {genre}
-                </span>
-              ))}
+              <span
+                key={category}
+                className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80"
+              >
+                {category}
+              </span>
             </div>
           )}
 
-          {synopsis ? (
+          {description ? (
             <p className="mt-5 text-sm leading-relaxed text-white/80 md:text-base">
-              {synopsis}
+              {description}
             </p>
           ) : (
             <p className="mt-5 text-sm text-white/50">

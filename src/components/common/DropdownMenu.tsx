@@ -45,7 +45,10 @@ const DropdownMenuItem = ({
   children,
   ...props
 }: DropdownMenuItemProps) => (
-  <RadixDropdownMenu.Item className={clsx("cursor-pointer", className)} {...props}>
+  <RadixDropdownMenu.Item
+    className={clsx("cursor-pointer!", className)}
+    {...props}
+  >
     {children}
   </RadixDropdownMenu.Item>
 );

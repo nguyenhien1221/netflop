@@ -1,11 +1,16 @@
-import { trendingMovies } from "@/constants/mockMovies";
 import MovieRowSection from "./MovieRowSection";
+import { useGetMovies } from "@/services/movies/useGetMovies";
 
 const TrendingSection = () => {
+  const { Movies } = useGetMovies({
+    page: 3,
+    limit: 5,
+  });
+
   return (
     <MovieRowSection
       title="Trending Now"
-      movies={trendingMovies}
+      movies={Movies}
       ariaLabel="Trending movies"
     />
   );

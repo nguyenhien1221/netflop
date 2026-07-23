@@ -1,8 +1,8 @@
-import type { Movie } from "@/types/movie";
+import type { IMovie } from "@/types/movie";
 
 export interface MovieRowSectionProps {
   title: string;
-  movies: Movie[];
+  movies: IMovie[];
   ariaLabel?: string;
   showProgress?: boolean;
   showReleaseDate?: boolean;

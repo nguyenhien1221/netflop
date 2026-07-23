@@ -16,7 +16,9 @@ const MovieRowSection = ({
   return (
     <section aria-label={ariaLabel ?? title}>
       <div className="mb-4 flex items-center justify-between gap-4 md:mb-5">
-        <h2 className="text-xl font-semibold text-white md:text-2xl">{title}</h2>
+        <h2 className="text-xl font-semibold text-white md:text-2xl">
+          {title}
+        </h2>
         <button
           type="button"
           className="flex shrink-0 items-center gap-0.5 text-sm font-medium text-[#0084ff] transition-opacity hover:opacity-80"
@@ -32,13 +34,13 @@ const MovieRowSection = ({
             key={movie.id}
             id={movie.id}
             title={movie.title}
-            posterUrl={movie.posterUrl}
-            year={movie.year}
-            rating={movie.rating}
-            isNew={movie.isNew}
+            posterUrl={movie.thumbnailUrl}
+            year={"2014"}
+            rating={"4.5"}
+            isNew={true}
             isPremium={movie.isPremium}
-            progress={showProgress ? movie.progress : undefined}
-            releaseDate={showReleaseDate ? movie.releaseDate : undefined}
+            progress={showProgress ? 0 : undefined}
+            releaseDate={showReleaseDate ? "2014" : undefined}
           />
         ))}
       </div>

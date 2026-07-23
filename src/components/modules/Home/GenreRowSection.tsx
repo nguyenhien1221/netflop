@@ -1,11 +1,17 @@
+import { useGetMovies } from "@/services/movies/useGetMovies";
 import MovieRowSection from "./MovieRowSection";
-import type { GenreRowSectionProps } from "@/types/components/home/genre-row-section.types";
 
-const GenreRowSection = ({ title, movies }: GenreRowSectionProps) => {
+const GenreRowSection = ({ title }: { title: string }) => {
+  const { Movies } = useGetMovies({
+    category: title.toLocaleLowerCase(),
+    page: 1,
+    limit: 10,
+  });
+
   return (
     <MovieRowSection
       title={title}
-      movies={movies}
+      movies={Movies}
       ariaLabel={`${title} movies`}
     />
   );

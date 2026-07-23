@@ -1,8 +1,6 @@
 export interface IUserType {
   id: string;
-  name: string;
-  email: string;
-  password: string;
+  walletAddress: string;
   createdAt: string;
   updatedAt: string;
 }

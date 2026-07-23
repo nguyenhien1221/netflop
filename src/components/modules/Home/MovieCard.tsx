@@ -11,7 +11,6 @@ const MovieCard = ({
   rating,
   isNew,
   isPremium,
-  progress,
   releaseDate,
 }: MovieCardProps) => {
   return (
@@ -47,14 +46,14 @@ const MovieCard = ({
             </span>
           )}
 
-          {progress !== undefined && (
+          {/* {progress !== undefined && (
             <div className="absolute inset-x-0 bottom-0 h-1 bg-white/20">
               <div
                 className="h-full bg-[#0084ff]"
                 style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
               />
             </div>
-          )}
+          )} */}
 
           <div className="pointer-events-none absolute inset-0 rounded-lg ring-0 ring-[#0084ff]/50 transition-all duration-300 group-hover:ring-2" />
         </div>

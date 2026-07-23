@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { baseSepolia } from "wagmi/chains";
 import {
   useConnect,
@@ -9,9 +8,13 @@ import {
   useSignMessage,
   useSwitchChain,
 } from "wagmi";
+import { UserRejectedRequestError } from "viem";
 import { useWalletStore } from "@/stores/useWalletStore";
+import { useUserStore } from "@/stores/useUserStore";
 import toast from "react-hot-toast";
 import { useGetBalance } from "./useGetBalance";
+import { getNonce, login } from "@/services/auth/getNonce";
+import { getErrorMessage } from "@/utils/error.utils";
 
 export const useWalletConnect = () => {
   const {
@@ -23,11 +26,14 @@ export const useWalletConnect = () => {
   const isConnected = useWalletStore((state) => state.isConnected);
   const connect = useWalletStore((state) => state.connect);
   const disconnect = useWalletStore((state) => state.disconnect);
+  const setUserDetail = useUserStore((state) => state.setUserDetail);
+  const clearUser = useUserStore((state) => state.clearUser);
   const balance = useGetBalance(
     isConnected && storeAddress ? (storeAddress as `0x${string}`) : undefined,
   );
 
-  const { mutateAsync: connectAsync, isPending: isConnecting } = useConnect();
+  const { mutateAsync: connectAsync, isPending: isConnectingWallet } =
+    useConnect();
   const { mutateAsync: signMessageAsync, isPending: isSigningMessage } =
     useSignMessage();
   const { mutateAsync: switchChainAsync, isPending: isSwitchingChain } =
@@ -35,71 +41,154 @@ export const useWalletConnect = () => {
   const { mutateAsync: disconnectAsync, isPending: isDisconnecting } =
     useDisconnect();
   const connectors = useConnectors();
+  const isConnectingRef = useRef(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
-    if (!isWalletConnected || walletChainId === baseSepolia.id) return;
+    const shouldResetSession =
+      !isWalletConnected ||
+      (isConnected &&
+        walletAddress &&
+        storeAddress &&
+        walletAddress !== storeAddress);
 
-    switchChainAsync({ chainId: baseSepolia.id });
-  }, [isWalletConnected]);
-
-  useEffect(() => {
-    if (!isWalletConnected) {
+    if (shouldResetSession) {
       disconnect();
-      return;
+      clearUser();
     }
+  }, [
+    walletAddress,
+    isWalletConnected,
+    isConnected,
+    storeAddress,
+    disconnect,
+    clearUser,
+  ]);
 
-    if (
-      isConnected &&
-      walletAddress &&
-      storeAddress &&
-      walletAddress !== storeAddress
-    ) {
-      disconnect();
-    }
-  }, [walletAddress, isWalletConnected, isConnected, storeAddress, disconnect]);
+  const handleConnectWallet = useCallback(async () => {
+    if (isConnectingRef.current) return;
+    isConnectingRef.current = true;
 
-  const handleConnectWallet = async () => {
     try {
-      let connectedAddress = walletAddress;
+      let address: `0x${string}` | null = null;
+      let chainId: number | undefined;
 
-      if (!isWalletConnected) {
+      if (isWalletConnected && walletAddress) {
+        address = walletAddress;
+        chainId = walletChainId;
+      } else {
+        // TODO: Support multi-wallet connector selection; using first available connector for now
         const activeConnector = connectors[0];
-        if (!activeConnector) return;
+        if (!activeConnector) {
+          toast.error("No wallet connector available");
+          return;
+        }
 
-        const result = await connectAsync({ connector: activeConnector });
-        connectedAddress = result.accounts[0];
+        try {
+          const result = await connectAsync({ connector: activeConnector });
+          address = result.accounts[0] ?? null;
+          chainId = result.chainId;
+        } catch (error) {
+          if (error instanceof UserRejectedRequestError) {
+            toast.error("Wallet connection cancelled");
+            return;
+          }
+
+          toast.error(getErrorMessage(error, "Failed to connect wallet"));
+          return;
+        }
       }
 
-      if (!connectedAddress) return;
+      if (!address) return;
 
-      await signMessageAsync({
-        message: "nonce: sign message",
-        account: connectedAddress,
-      });
+      const activeChainId = chainId ?? walletChainId;
+      if (activeChainId !== baseSepolia.id) {
+        try {
+          await switchChainAsync({ chainId: baseSepolia.id });
+        } catch (error) {
+          if (error instanceof UserRejectedRequestError) {
+            toast.error("Chain switch cancelled");
+            return;
+          }
 
-      connect(connectedAddress);
+          toast.error(getErrorMessage(error, "Failed to switch network"));
+          return;
+        }
+      }
+
+      let message: string;
+      try {
+        message = await getNonce(address);
+      } catch (error) {
+        toast.error(getErrorMessage(error, "Failed to get nonce"));
+        return;
+      }
+
+      let signature: string;
+      try {
+        signature = await signMessageAsync({ account: address, message });
+      } catch (error) {
+        if (error instanceof UserRejectedRequestError) {
+          toast.error("Signature rejected");
+          return;
+        }
+
+        toast.error(getErrorMessage(error, "Failed to sign message"));
+        return;
+      }
+
+      setIsLoggingIn(true);
+      let user;
+      try {
+        const response = await login(address, signature);
+        user = response.user;
+      } catch (error) {
+        toast.error(getErrorMessage(error, "Login failed"));
+        return;
+      } finally {
+        setIsLoggingIn(false);
+      }
+
+      if (!user) return;
+
+      connect(address);
+      setUserDetail(user);
       toast.success("Wallet connected");
     } catch (error) {
-      console.log(error);
+      toast.error(getErrorMessage(error));
+    } finally {
+      isConnectingRef.current = false;
     }
-  };
+  }, [
+    isWalletConnected,
+    walletAddress,
+    walletChainId,
+    connectors,
+    connectAsync,
+    switchChainAsync,
+    signMessageAsync,
+    connect,
+    setUserDetail,
+  ]);
 
-  const handleDisconnectWallet = async () => {
+  const handleDisconnectWallet = useCallback(async () => {
     try {
       await disconnectAsync();
       disconnect();
+      clearUser();
     } catch (error) {
-      console.error(error);
+      toast.error(getErrorMessage(error, "Failed to disconnect wallet"));
     }
-  };
+  }, [disconnectAsync, disconnect, clearUser]);
 
   return {
     balance,
     address: isConnected ? storeAddress : null,
     chainId: walletChainId,
-    isConnecting: isConnecting || isSwitchingChain || isSigningMessage,
+    isConnecting:
+      isConnectingWallet || isSwitchingChain || isSigningMessage || isLoggingIn,
     isConnected,
-    isDisconnecting: isDisconnecting,
+    isDisconnecting,
     handleConnectWallet,
     handleDisconnectWallet,
   };
