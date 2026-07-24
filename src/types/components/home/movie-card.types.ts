@@ -1,14 +1,14 @@
-import type { Movie } from "@/types/movie";
+import type { IMovie } from "@/types/movie";
 
 export type MovieCardProps = Pick<
-  Movie,
+  IMovie,
   | "id"
   | "title"
-  | "posterUrl"
-  | "year"
-  | "rating"
-  | "isNew"
+  | "thumbnailUrl"
+  | "description"
+  | "category"
+  | "price"
+  | "currency"
   | "isPremium"
-  | "progress"
-  | "releaseDate"
+  | "hasPurchased"
 >;

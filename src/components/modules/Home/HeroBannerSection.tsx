@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
-import { Info, Lock, Play, Star } from "lucide-react";
+import { Info, Lock, Play } from "lucide-react";
 import Button from "@/components/common/Button";
 import { featuredMovie } from "@/constants/mockMovies";
 import { NAV_PATH } from "@/constants/nav.constants";
 
 const HeroBannerSection = () => {
-  const { title, backdropUrl, year, rating, synopsis, genres, isPremium } =
-    featuredMovie;
+  const {
+    title,
+    thumbnailUrl,
+
+    category,
+
+    isPremium,
+  } = featuredMovie;
 
   return (
     <section
@@ -14,7 +20,7 @@ const HeroBannerSection = () => {
       className="relative min-h-[420px] w-full overflow-hidden md:min-h-[520px]"
     >
       <img
-        src={backdropUrl}
+        src={thumbnailUrl}
         alt=""
         aria-hidden
         className="absolute inset-0 h-full w-full object-cover"
@@ -38,25 +44,8 @@ const HeroBannerSection = () => {
           </div>
 
           <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-white/70">
-            <span>{year}</span>
-            <span>·</span>
-            <span className="flex items-center gap-1">
-              <Star size={14} className="fill-amber-400 text-amber-400" />
-              {rating}
-            </span>
-            {genres && (
-              <>
-                <span>·</span>
-                <span>{genres.slice(0, 3).join(" · ")}</span>
-              </>
-            )}
+            <span>{category}</span>
           </div>
-
-          {synopsis && (
-            <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-white/80 md:text-base">
-              {synopsis}
-            </p>
-          )}
 
           <div className="mt-6 flex flex-wrap gap-4">
             <Button
