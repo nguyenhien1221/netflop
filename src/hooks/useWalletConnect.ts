@@ -27,6 +27,7 @@ export const useWalletConnect = () => {
   const connect = useWalletStore((state) => state.connect);
   const disconnect = useWalletStore((state) => state.disconnect);
   const setUserDetail = useUserStore((state) => state.setUserDetail);
+  const setAccessToken = useUserStore((state) => state.setAccessToken);
   const clearUser = useUserStore((state) => state.clearUser);
   const balance = useGetBalance(
     isConnected && storeAddress ? (storeAddress as `0x${string}`) : undefined,
@@ -139,9 +140,11 @@ export const useWalletConnect = () => {
 
       setIsLoggingIn(true);
       let user;
+      let token: string | null = null;
       try {
         const response = await login(address, signature);
         user = response.user;
+        token = response.accessToken;
       } catch (error) {
         toast.error(getErrorMessage(error, "Login failed"));
         return;
@@ -153,6 +156,7 @@ export const useWalletConnect = () => {
 
       connect(address);
       setUserDetail(user);
+      setAccessToken(token);
       toast.success("Wallet connected");
     } catch (error) {
       toast.error(getErrorMessage(error));
@@ -169,6 +173,7 @@ export const useWalletConnect = () => {
     signMessageAsync,
     connect,
     setUserDetail,
+    setAccessToken,
   ]);
 
   const handleDisconnectWallet = useCallback(async () => {

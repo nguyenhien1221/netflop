@@ -1,4 +1,4 @@
-import type { Movie } from "@/types/movie";
+import type { IMovie } from "@/types/movie";
 import {
   actionMovies,
   continueWatchingMovies,
@@ -8,7 +8,7 @@ import {
   trendingMovies,
 } from "@/constants/mockMovies";
 
-const allMovies: Movie[] = Array.from(
+const allMovies: IMovie[] = Array.from(
   new Map(
     [
       featuredMovie,
@@ -21,5 +21,5 @@ const allMovies: Movie[] = Array.from(
   ).values(),
 );
 
-export const getMovieById = (id: string): Movie | undefined =>
+export const getMovieById = (id: number): IMovie | undefined =>
   allMovies.find((movie) => movie.id === id);

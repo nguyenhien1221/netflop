@@ -1,11 +1,12 @@
 import { Lock } from "lucide-react";
+import BuyMovieButton from "@/components/modules/Watch/BuyMovieButton";
 import type { PremiumGateSectionProps } from "@/types/components/watch/premium-gate-section.types";
 
 const PremiumGateSection = ({ movie }: PremiumGateSectionProps) => {
   return (
     <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black">
       <img
-        src={movie.posterUrl}
+        src={movie.thumbnailUrl}
         alt=""
         aria-hidden
         className="absolute inset-0 h-full w-full object-cover opacity-25 blur-sm"
@@ -23,9 +24,11 @@ const PremiumGateSection = ({ movie }: PremiumGateSectionProps) => {
           </h2>
           <p className="text-sm text-white/70 md:text-base">
             <span className="font-medium text-white">{movie.title}</span> is a
-            premium title. Connect your wallet to unlock and watch this movie.
+            premium title. Purchase with tokens to unlock and watch this movie.
           </p>
         </div>
+
+        <BuyMovieButton movie={movie} />
       </div>
     </div>
   );

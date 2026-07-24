@@ -16,7 +16,7 @@ const MovieCard = ({
   return (
     <Link
       to={NAV_PATH.WATCH(id)}
-      className="group block w-full min-w-[140px] shrink-0 snap-start sm:min-w-0"
+      className="group block w-full min-w-35 shrink-0 snap-start sm:min-w-0"
     >
       <article>
         <div className="relative overflow-hidden rounded-lg bg-white/5">

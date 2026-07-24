@@ -5,7 +5,7 @@ import { formatTokenAmount } from "@/utils/helper";
 import { useMemo } from "react";
 
 export const useGetBalance = (walletAddress?: `0x${string}`) => {
-  const { data, isLoading, isError } = useReadContracts({
+  const { data, isLoading, isError, refetch } = useReadContracts({
     contracts: [
       {
         address: contractAddress,
@@ -46,8 +46,9 @@ export const useGetBalance = (walletAddress?: `0x${string}`) => {
       symbol,
       isLoading,
       isError,
+      refetch,
     };
-  }, [data, isLoading, isError]);
+  }, [data, isLoading, isError, refetch]);
 
   return formattedBalance;
 };

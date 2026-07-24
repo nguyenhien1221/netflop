@@ -1,5 +1,5 @@
 import type { IMovie } from "@/types/movie";
 
-export interface PremiumGateSectionProps {
+export interface BuyMovieButtonProps {
   movie: IMovie;
 }

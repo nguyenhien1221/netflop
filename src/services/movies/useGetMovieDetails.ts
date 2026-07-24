@@ -1,9 +1,9 @@
-import { apiUrl } from "@/constants/enviroment.constant";
+import { apiClient } from "@/configs/axios";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import type { IMovie } from "@/types/movie";
 
-export const getMovieDetails = async (id: string) => {
-  const response = await axios.get(`${apiUrl}/movies/${id}`);
+export const getMovieDetails = async (id: string): Promise<IMovie> => {
+  const response = await apiClient.get<IMovie>(`/movies/${id}`);
   return response.data;
 };
 

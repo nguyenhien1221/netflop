@@ -9,7 +9,7 @@ const MovieInfoSection = ({ movie }: MovieInfoSectionProps) => {
         <img
           src={thumbnailUrl}
           alt={`${title} poster`}
-          className="mx-auto aspect-2/3 w-[140px] shrink-0 rounded-lg object-cover ring-1 ring-white/10 sm:mx-0 sm:w-[160px]"
+          className="mx-auto aspect-2/3 w-35 shrink-0 rounded-lg object-cover ring-1 ring-white/10 sm:mx-0 sm:w-40"
         />
 
         <div className="min-w-0 flex-1">
@@ -43,7 +43,7 @@ const MovieInfoSection = ({ movie }: MovieInfoSectionProps) => {
                 key={category}
                 className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80"
               >
-                {category}
+                {category.toUpperCase()}
               </span>
             </div>
           )}

@@ -2,8 +2,9 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { UserState } from "@/types/stores/use-user-store.types";
 
-const initialState: Pick<UserState, "userDetail"> = {
+const initialState: Pick<UserState, "userDetail" | "accessToken"> = {
   userDetail: null,
+  accessToken: null,
 };
 
 export const useUserStore = create<UserState>()(
@@ -11,6 +12,7 @@ export const useUserStore = create<UserState>()(
     (set) => ({
       ...initialState,
       setUserDetail: (userDetail) => set({ userDetail }),
+      setAccessToken: (accessToken) => set({ accessToken }),
       clearUser: () => set(initialState),
     }),
     {
@@ -18,6 +20,7 @@ export const useUserStore = create<UserState>()(
       storage: createJSONStorage(() => sessionStorage),
       partialize: (state) => ({
         userDetail: state.userDetail,
+        accessToken: state.accessToken,
       }),
     },
   ),

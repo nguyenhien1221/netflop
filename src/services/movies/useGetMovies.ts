@@ -1,5 +1,4 @@
-import axios from "axios";
-import { apiUrl } from "@/constants/enviroment.constant";
+import { apiClient } from "@/configs/axios";
 import { useQuery } from "@tanstack/react-query";
 import type { IMovie } from "@/types/movie";
 import type { IPaginatedResponse } from "@/types/pagination.types";
@@ -15,16 +14,13 @@ export const getMovies = async ({
   page,
   limit,
 }: GetMoviesParams): Promise<IPaginatedResponse<IMovie>> => {
-  const response = await axios.get<IPaginatedResponse<IMovie>>(
-    `${apiUrl}/movies`,
-    {
-      params: {
-        page,
-        limit,
-        category,
-      },
+  const response = await apiClient.get<IPaginatedResponse<IMovie>>("/movies", {
+    params: {
+      page,
+      limit,
+      category,
     },
-  );
+  });
   return response.data;
 };
 

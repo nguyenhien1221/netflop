@@ -3,7 +3,7 @@ import { useGetMovies } from "@/services/movies/useGetMovies";
 
 const TrendingSection = () => {
   const { Movies } = useGetMovies({
-    page: 3,
+    page: 2,
     limit: 5,
   });
 

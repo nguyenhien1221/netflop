@@ -3,7 +3,7 @@ import { useGetMovies } from "@/services/movies/useGetMovies";
 
 const NewUpdatesSection = () => {
   const { Movies } = useGetMovies({
-    page: 2,
+    page: 1,
     limit: 5,
   });
   return (

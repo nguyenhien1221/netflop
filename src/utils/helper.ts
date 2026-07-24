@@ -2,25 +2,26 @@ export const truncateAddress = (address: string) =>
   `${address.slice(0, 6)}...${address.slice(-4)}`;
 
 export const formatTokenAmount = (
-  balance: string | undefined,
-  maxDecimals = 2,
+  balance: string | number | null | undefined,
+  decimals: number = 2,
 ) => {
   if (!balance) return "—";
 
-  const num = parseFloat(balance);
+  const num = typeof balance === "number" ? balance : parseFloat(balance);
   if (isNaN(num)) return "—";
 
   return num.toLocaleString(undefined, {
-    maximumFractionDigits: maxDecimals,
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
   });
 };
 
 export const formatTokenBalance = (
-  balance: string | undefined,
+  balance: string | number | null | undefined,
   symbol: string | undefined,
-  maxDecimals = 2,
+  decimals = 2,
 ) => {
-  const formatted = formatTokenAmount(balance, maxDecimals);
+  const formatted = formatTokenAmount(balance, decimals);
   if (formatted === "—") return formatted;
 
   return symbol ? `${formatted} ${symbol}` : formatted;
