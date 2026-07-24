@@ -1,48 +1,27 @@
 import { Link } from "react-router-dom";
 import { Lock, Star } from "lucide-react";
 import { NAV_PATH } from "@/constants/nav.constants";
-import type { MovieCardProps } from "@/types/components/home/movie-card.types";
+import type { IMovie } from "@/types/movie";
 
-const MovieCard = ({
-  id,
-  title,
-  posterUrl,
-  year,
-  rating,
-  isNew,
-  isPremium,
-  releaseDate,
-}: MovieCardProps) => {
+const MovieCard = ({ id, title, thumbnailUrl, isPremium }: IMovie) => {
   return (
     <Link
-      to={NAV_PATH.WATCH(id)}
+      to={NAV_PATH.WATCH(id.toString())}
       className="group block w-full min-w-35 shrink-0 snap-start sm:min-w-0"
     >
       <article>
         <div className="relative overflow-hidden rounded-lg bg-white/5">
           <img
-            src={posterUrl}
+            src={thumbnailUrl}
             alt={title}
             loading="lazy"
             className="aspect-2/3 w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
 
-          {isNew && (
-            <span className="absolute left-2 top-2 rounded bg-[#0084ff] px-2 py-0.5 text-xs font-semibold text-white">
-              NEW
-            </span>
-          )}
-
           {isPremium && (
             <span className="absolute right-2 top-2 flex items-center gap-1 rounded bg-amber-500/90 px-2 py-0.5 text-xs font-semibold text-black">
               <Lock size={10} />
               PREMIUM
-            </span>
-          )}
-
-          {releaseDate && (
-            <span className="absolute bottom-2 left-2 right-2 rounded bg-black/70 px-2 py-1 text-center text-xs font-medium text-white">
-              {releaseDate}
             </span>
           )}
 
@@ -61,16 +40,15 @@ const MovieCard = ({
         <div className="mt-2.5">
           <h3 className="truncate text-sm font-medium text-white">{title}</h3>
           <p className="mt-0.5 flex items-center gap-1.5 text-xs text-white/60">
-            <span>{year}</span>
-            {rating !== "—" && (
-              <>
-                <span>·</span>
-                <span className="flex items-center gap-0.5">
-                  <Star size={12} className="fill-amber-400 text-amber-400" />
-                  {rating}
-                </span>
-              </>
-            )}
+            <span>{2025}</span>
+
+            <>
+              <span>·</span>
+              <span className="flex items-center gap-0.5">
+                <Star size={12} className="fill-amber-400 text-amber-400" />
+                {4}
+              </span>
+            </>
           </p>
         </div>
       </article>

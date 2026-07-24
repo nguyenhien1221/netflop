@@ -6,8 +6,6 @@ const MovieRowSection = ({
   title,
   movies,
   ariaLabel,
-  showProgress = false,
-  showReleaseDate = false,
 }: MovieRowSectionProps) => {
   if (movies.length === 0) {
     return null;
@@ -34,13 +32,8 @@ const MovieRowSection = ({
             key={movie.id}
             id={movie.id}
             title={movie.title}
-            posterUrl={movie.thumbnailUrl}
-            year={"2014"}
-            rating={"4.5"}
-            isNew={true}
+            thumbnailUrl={movie.thumbnailUrl}
             isPremium={movie.isPremium}
-            progress={showProgress ? 0 : undefined}
-            releaseDate={showReleaseDate ? "2014" : undefined}
           />
         ))}
       </div>

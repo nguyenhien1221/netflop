@@ -26,7 +26,10 @@ const BuyMovieButton = ({ movie }: BuyMovieButtonProps) => {
       return;
     }
 
-    const transferAmount = parseUnits(movie.price.toString(), balance.decimals);
+    const transferAmount = parseUnits(
+      movie.price?.toString() ?? "0",
+      balance.decimals,
+    );
     const userBalance = parseUnits(balance.balance, balance.decimals);
 
     if (userBalance < transferAmount) {

@@ -13,11 +13,7 @@ import type { IMovie } from "@/types/movie";
 import { getErrorMessage } from "@/utils/error.utils";
 import { useGetBalance } from "./useGetBalance";
 
-export type PurchaseStep =
-  | "idle"
-  | "transferring"
-  | "confirming"
-  | "verifying";
+export type PurchaseStep = "idle" | "transferring" | "confirming" | "verifying";
 
 export const usePurchaseMovie = () => {
   const isConnected = useWalletStore((state) => state.isConnected);
@@ -60,7 +56,10 @@ export const usePurchaseMovie = () => {
         return;
       }
 
-      const transferAmount = parseUnits(movie.price.toString(), decimals);
+      const transferAmount = parseUnits(
+        movie.price?.toString() ?? "0",
+        decimals,
+      );
 
       if (balanceAmount !== undefined) {
         const userBalance = parseUnits(balanceAmount, decimals);

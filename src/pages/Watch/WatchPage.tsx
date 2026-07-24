@@ -44,8 +44,8 @@ const WatchPage = () => {
       ) : (
         <VideoPlayer
           videoUrl={MovieDetails.videoUrl}
-          posterUrl={MovieDetails.thumbnailUrl}
-          title={MovieDetails.title}
+          posterUrl={MovieDetails.thumbnailUrl ?? ""}
+          title={MovieDetails.title ?? ""}
         />
       )}
       <MovieInfoSection movie={MovieDetails} />
