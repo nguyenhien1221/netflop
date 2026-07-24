@@ -65,7 +65,7 @@ const HeroBannerSection = () => {
               size="lg"
               className="min-w-[148px] gap-2.5 font-semibold"
             >
-              <Link to={NAV_PATH.WATCH(featuredMovie.id)}>
+              <Link to={NAV_PATH.WATCH("161")}>
                 <Play size={22} fill="currentColor" />
                 Play
               </Link>
